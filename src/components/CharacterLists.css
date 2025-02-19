@@ -1,0 +1,32 @@
+.character-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    padding: 20px;
+}
+
+.character-card {
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 16px;
+    text-align: center;
+    cursor: pointer;
+    transition: transform 0.2s;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    width: 125px; 
+}
+
+.character-card:hover {
+    transform: scale(1.05);
+}
+
+.character-card img {
+    max-width: 50%;
+    border-radius: 8px;
+}
+
+.character-card h3 {
+    margin-top: 8px;
+    font-size: 1.2em;
+    padding: 0 10px;
+}
