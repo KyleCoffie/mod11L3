@@ -1,35 +1,37 @@
-// CharacterDetail.js
 import { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import { publicKey, hash } from './passwords.jsx';
 
-const CharacterDetail = ({ characterId }) => {
-    //store the character data
-    const [character, setCharacter] = useState(null);
-    //store the loading state
-    const [loading, setLoading] = useState(true);
-    //store the error state
-    const [error, setError] = useState(null);
 
+const CharacterDetails = () => {
+  const { id } = useParams();
+  const [character, setCharacter] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
     useEffect(() => {
+        console.log('Fetching Charecter details for id',id);
         //fetch the character detail
-        const fetchCharacterDetail = async () => {
+        const fetchCharacterDetails = async () => {
             try {
-                const response = await axios.get(`https://gateway.marvel.com/v1/public/characters/${characterId}?ts=1&apikey=${publicKey}&hash=${hash}`);
+                const response = await axios.get(`https://gateway.marvel.com/v1/public/characters/${id}?ts=1&apikey=${publicKey}&hash=${hash}`);
+                console.log('Character details fetched:', response.data);
                 setCharacter(response.data.data.results[0]);
                 setLoading(false);
             } catch (err) {
+                console.error('Error fetching character details:', err);
                 setError(err.message);
                 setLoading(false);
             }
         };
-        fetchCharacterDetail();
-    }, [characterId]);
+        fetchCharacterDetails();
+    }, [id]);
 
     if (loading) return <p>Loading...</p>;
     if (error) return <p>Error: {error}</p>;
     if (!character) return null;
 
+    console.log('Rendering CharacterDetails Component');
     return (
         <div>
             <h2>{character.name}</h2>
@@ -45,4 +47,4 @@ const CharacterDetail = ({ characterId }) => {
     );
 };
 
-export default CharacterDetail;
+export default CharacterDetails;
